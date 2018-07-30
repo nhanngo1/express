@@ -2,37 +2,49 @@ const https = require('https')
 const fs = require('fs');
 const url = require('url');
 
-const GITHUB_TOKEN = '974d3fefc667101ef1c4b52a339b5e3b1f0eb495';
+const GITHUB_TOKEN = 'ENTER_YOUR_TOKEN_HERE';
 
-function writeFile(name, data) {
-    fs.writeFile(name, JSON.stringify(data), function(err) {
-        if (err)
-            throw err;
-        console.log('data saved.');
-    })
+function writeFile(user) {
+    const { login } = user;
+
+    let users = fs.readFileSync('./data.json')
+    try {
+        users = JSON.parse(users) || []
+    } catch (error) {
+        users = []
+    }
+
+    const existsUser = users.find(user => user.login.toLowerCase() === login.toLowerCase())
+
+    if (existsUser) {
+        Object.assign(existsUser, user)
+    } else {
+        users.push(user)
+    }
+
+    //console.log(existsUser.name)
+
+    fs.writeFileSync('./data.json', JSON.stringify(users))
+    console.log("write file finished")
+}
+
+function findUser(username) {
+
+    let users = fs.readFileSync('./data.json')
+    try {
+        users = JSON.parse(users) || []
+    } catch (error) {
+        users = []
+    }
+
+    return users.find(user => user.login.toLowerCase() === username)
 }
 
 // get data from internet then save to local file data.json
-function getUserData(user) {
-    let data = "";
-    let resBody = "";
-    let selectedUser = "";
-    try {
-        data = require('./data.json');
-        data = JSON.parse(data);
-        console.log(data.length);
+function getUserDataFromGithub(user) {
+    return new Promise((resolve, reject) => {
+        let data = "";
 
-        selectedUser = data.find(item => {
-            return item.login == user
-        })
-    } catch (err) {
-        console.log(`findUser error ${err.message}`)
-    }
-
-    if (selectedUser) {
-        console.log(`${user} info is available is local db`);
-        //return selectedUser;
-    } else {
         console.log("get user from github");
 
         let link = url.parse(`https://api.github.com/users/${user}`);
@@ -47,6 +59,8 @@ function getUserData(user) {
         }
 
         let req = https.request(options, async(res) => {
+
+            let resBody = "";
             try {
                 data = require('./data.json').toString();
             } catch (err) {
@@ -64,22 +78,8 @@ function getUserData(user) {
             })
 
             res.on('end', () => {
-
-                data = data.replace("[", "");
-                data = data.replace("]", "");
-                if (data === "")
-                    data = "[" + resBody + "]"
-                else
-                    data = "[" + data + "," + resBody + "]"
-                selectedUser = resBody
-                writeFile('data.json', data);
-
-                // fs.writeFile('data.json', JSON.stringify(data), function(err) {
-                //     if (err)
-                //         throw err;
-                //     console.log('data saved.');
-                //     selectedUser = resBody
-                // })
+                console.log('retrieving data finished.')
+                resolve(JSON.parse(resBody.toString()));
             })
         })
 
@@ -88,9 +88,32 @@ function getUserData(user) {
         })
 
         req.end();
-    }
-    return selectedUser;
+
+    })
 }
 
-exports.getUserData = getUserData;
+function getUsersDataFromJsonFile() {
+    let users = fs.readFileSync('./data.json')
+    let usersInfo = [];
+    try {
+        users = JSON.parse(users) || []
+    } catch (error) {
+        users = []
+    }
+
+    users.forEach(user => {
+        let info = {
+                "login": user.login,
+                "name": user.name,
+                "company": user.company
+            }
+            //console.log(info);
+        usersInfo.push(info);
+    })
+    return usersInfo;
+}
+
+exports.getUsersDataFromJsonFile = getUsersDataFromJsonFile;
+exports.getUserDataFromGithub = getUserDataFromGithub;
 exports.writeFile = writeFile;
+exports.findUser = findUser;
