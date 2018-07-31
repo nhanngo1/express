@@ -4,14 +4,16 @@
 <script src="/js/script.js"></script>
 
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
-    <h1>Github account info</h1>
+    <h1 class="fa fa-github fa-2x"> Github Account Info</h1>
     <div class="wrapper">
         <div class="search">
             <input type=text placeholder="Enter github account" id="search-text">
-            <button id="search-btn">search</button>
+            <button class="fa fa-search" id="search-btn"></button>
+
             <br>
             <lable id="validation-msg"> </lable>
         </div>
@@ -41,10 +43,11 @@
                                 <%= user.company %>
         </div>
         </td>
-        <td class="action"><input type="button" class="btn btn_edit" value="Edit" id="edt_<%= user.login %>">
-            <input type="button" class="btn btn_delete" value="Delete" id="del_<%= user.login %>">
-            <input type="button" class="btn btn_save" value="Save" id="sav_<%= user.login %>">
-            <input type="button" class="btn btn_cancel" value="Cancel" id="can_<%= user.login %>">
+        <td class="action">
+            <button class="fa fa-edit btn btn_edit" id="edt_<%= user.login %>">
+            <button class="fa fa-trash btn btn_delete" id="del_<%= user.login %>">
+            <button class="btn btn_save" id="sav_<%= user.login %>">
+            <button class="btn btn_cancel" id="can_<%= user.login %>">
         </td>
 
         </tr>

@@ -29,10 +29,10 @@ $(function() {
                 response += '               <td>' + user.login + '</td>';
                 response += '               <td><div class="editable">' + user.name + '</div></td>';
                 response += '               <td><div class="editable">' + user.company + '</div></td>';
-                response += '               <td class="action"><input type="button" class="btn btn_edit" value="Edit" id="edt_' + index + '">';
-                response += '               <input type="button" class="btn btn_delete" value="Delete" id="del_' + index + '">';
-                response += '               <input type="button" class="btn btn_save" value="Save" id="sav_' + index + '">';
-                response += '               <input type="button" class="btn btn_cancel" value="Cancel" id="can_' + index + '"></td>';
+                response += '               <td class="action"><button class="fa fa-edit btn btn_edit" id="edt_' + index + '">';
+                response += '               <button type="button" class="fa fa-trash btn btn_delete" id="del_' + index + '">';
+                response += '               <button type="button" class="fa fa-save btn btn_save" id="sav_' + index + '">';
+                response += '               <button type="button" class="fa fa-ban btn btn_cancel" id="can_' + index + '"></td>';
                 response += '           </tr>';
             }
         });
