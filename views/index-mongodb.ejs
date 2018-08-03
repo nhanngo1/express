@@ -1,0 +1,67 @@
+<html>
+<link rel="stylesheet" href="/css/style.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/script-mongodb.js"></script>
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <h1 class="fa fa-github fa-2x"> Github Account Info</h1>
+    <div class="wrapper">
+        <div class="search">
+            <input type=text placeholder="Enter github account" id="search-text">
+            <button class="fa fa-search" id="search-btn"></button>
+
+            <br>
+            <lable id="validation-msg"> </lable>
+        </div>
+        <br><br>
+        <div class="profile">
+            <table id="userdata">
+                <thead>
+                    <!-- <th>#</th> -->
+                    <th>Account</th>
+                    <th>Name</th>
+                    <th>Company</th>
+                    <th>Actions</th>
+                </thead>
+                <tbody id="user-info">
+                    <% usersInfo.forEach(user => { %>
+                        <tr>
+                            <td>
+                                <%= user.login %>
+                            </td>
+                            <td>
+                                <div class="editable">
+                                    <%= user.name %>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="editable"></div>
+                                <%= user.company %>
+        </div>
+        </td>
+        <td class="action">
+            <button class="fa fa-edit btn btn_edit" id="edt_<%= user.login %>">
+            <button class="fa fa-trash btn btn_delete" id="del_<%= user.login %>">
+            <button class="btn btn_save" id="sav_<%= user.login %>">
+            <button class="btn btn_cancel" id="can_<%= user.login %>">
+        </td>
+
+        </tr>
+
+        <% }) %>
+            </tbody>
+            </table>
+    </div>
+    </div>
+
+</body>
+<script type="text/javascript">
+    $(document).find('.btn_save').hide();
+    $(document).find('.btn_cancel').hide();
+</script>
+
+</html>

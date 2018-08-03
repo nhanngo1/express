@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const util = require('./exercise-request');
 const path = require('path')
 const fs = require('fs');
+const port = 5000;
 
 app.use(bodyParser());
 //app.use(router);
@@ -91,6 +92,6 @@ app.delete('/users/:index', (req, res) => {
     res.send(users);
 })
 
-app.listen(5000, () => {
-    console.log("Server is listening to port 5000")
+app.listen(port, () => {
+    console.log(`Server is listening to port ${port}`)
 })

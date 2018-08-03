@@ -3,7 +3,7 @@ const fs = require('fs');
 const url = require('url');
 
 const GITHUB_TOKEN = 'ENTER_YOUR_TOKEN_HERE';
-// const GITHUB_TOKEN = ''
+//const GITHUB_TOKEN = ''
 
 function writeFile(user) {
     const { login } = user;
