@@ -45,6 +45,10 @@ function findUser(username) {
 function getUserDataFromGithub(user) {
     return new Promise((resolve, reject) => {
         let data = "";
+        if (GITHUB_TOKEN === 'ENTER_YOUR_TOKEN_HERE' || GITHUB_TOKEN === '') {
+            console.error("Please add github token");
+            return;
+        }
 
         console.log("get user from github");
 
